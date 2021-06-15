@@ -1,10 +1,20 @@
 import numpy as np
+import PySimpleGUI as sg
 import matplotlib.pyplot as plt
 
-matrix = np.loadtxt('GeologicalModel.csv',skiprows=1,usecols=(0,1,2),delimiter=',',dtype=np.float)
+
 #print(matrix)
 
 #print(len(matrix[:,0]))
+
+layout = [[sg.T("")], [sg.Text("Choose a file: "), sg.Input(), sg.FileBrowse(key="-IN-")],[sg.Button("Submit")]]
+
+###Building Window
+window = sg.Window('My File Browser', layout, size=(600,150))
+
+event, values = window.read()
+
+matrix = np.loadtxt(values[0],skiprows=1,usecols=(0,1,2),delimiter=',',dtype=np.float)
 
 xmin, xmax = np.min(matrix[:,0]), np.max(matrix[:,0])
 xlen = xmax - xmin
